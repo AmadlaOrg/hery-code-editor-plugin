@@ -1,0 +1,209 @@
+{
+  "HERY Entity": {
+    "prefix": "hery",
+    "description": "New HERY entity with all reserved properties",
+    "body": [
+      "---",
+      "_type: ${1:amadla.org/entity/${2:application}@${3:v1.0.0}}",
+      "_meta:",
+      "  name: ${4:MyEntity}",
+      "  description: ${5:Description}",
+      "  tags:",
+      "    - ${6:tag}",
+      "_body:",
+      "  ${0}"
+    ]
+  },
+  "HERY Minimal": {
+    "prefix": "hery-min",
+    "description": "Minimal HERY entity with _type and _body",
+    "body": [
+      "---",
+      "_type: ${1:amadla.org/entity/${2:application}@${3:v1.0.0}}",
+      "_body:",
+      "  ${0}"
+    ]
+  },
+  "HERY with Extends": {
+    "prefix": "hery-extends",
+    "description": "HERY entity that extends another entity",
+    "body": [
+      "---",
+      "_type: ${1:amadla.org/entity/${2:application}@${3:v1.0.0}}",
+      "_extends: ${4:github.com/AmadlaOrg/${5:EntityApplication}@${6:v1.0.0}}",
+      "_meta:",
+      "  name: ${7:MyEntity}",
+      "  description: ${8:Description}",
+      "_body:",
+      "  ${0}"
+    ]
+  },
+  "HERY with Requires": {
+    "prefix": "hery-requires",
+    "description": "HERY entity with dependency requirements",
+    "body": [
+      "---",
+      "_type: ${1:amadla.org/entity/${2:application}@${3:v1.0.0}}",
+      "_requires:",
+      "  - ${4:amadla.org/entity/${5:package}@${6:v1.0.0}}",
+      "_body:",
+      "  ${0}"
+    ]
+  },
+  "HERY Full": {
+    "prefix": "hery-full",
+    "description": "HERY entity with all five reserved properties",
+    "body": [
+      "---",
+      "_type: ${1:amadla.org/entity/${2:application}@${3:v1.0.0}}",
+      "_extends: ${4:github.com/AmadlaOrg/${5:EntityApplication}@${6:v1.0.0}}",
+      "_meta:",
+      "  name: ${7:MyEntity}",
+      "  description: ${8:Description}",
+      "  category: ${9:Application}",
+      "  tags:",
+      "    - ${10:tag}",
+      "_requires:",
+      "  - ${11:amadla.org/entity/${12:package}@${13:v1.0.0}}",
+      "_body:",
+      "  ${0}"
+    ]
+  },
+  "HERY Package": {
+    "prefix": "hery-package",
+    "description": "Package entity",
+    "body": [
+      "---",
+      "_type: amadla.org/entity/package@v1.0.0",
+      "_body:",
+      "  manager: ${1|auto,apt,yum,dnf,pacman,brew,apk|}",
+      "  update: ${2|true,false|}",
+      "  packages:",
+      "    - ${0:package-name}"
+    ]
+  },
+  "HERY Template": {
+    "prefix": "hery-template",
+    "description": "Template entity for weaver",
+    "body": [
+      "---",
+      "_type: amadla.org/entity/template@v1.0.0",
+      "_requires:",
+      "  - ${1:amadla.org/entity/application@v1.0.0}",
+      "_body:",
+      "  engine: ${2|go,jinja2,mustache,qute,freemarker|}",
+      "  source: ${3:template.conf.tmpl}",
+      "  output: ${4:/etc/app/config.conf}",
+      "  description: ${0:Template description}"
+    ]
+  },
+  "HERY Webserver": {
+    "prefix": "hery-webserver",
+    "description": "Webserver application entity",
+    "body": [
+      "---",
+      "_type: amadla.org/entity/application/webserver@v1.0.0",
+      "_requires:",
+      "  - amadla.org/entity/package@v1.0.0",
+      "_body:",
+      "  server_name: ${1:localhost}",
+      "  listen:",
+      "    - ${2:8080}",
+      "  root: ${3:/var/www/html}",
+      "  index:",
+      "    - ${4:index.html}",
+      "  locations:",
+      "    - path: /",
+      "      try_files: \"\\$uri \\$uri/ =404\"",
+      "  ${0}"
+    ]
+  },
+  "HERY Tools": {
+    "prefix": "hery-tools",
+    "description": "Tools configuration entity",
+    "body": [
+      "---",
+      "_type: amadla.org/entity/tools@v1.0.0",
+      "_body:",
+      "  tools:",
+      "    - name: ${1:hery}",
+      "      description: \"${2:Tool description}\"",
+      "      required: ${3|true,false|}",
+      "      entity_types:",
+      "        - \"${4:amadla.org/entity/*}\"",
+      "  ${0}"
+    ]
+  },
+  "HERY Secret": {
+    "prefix": "hery-secret",
+    "description": "Secret entity for doorman",
+    "body": [
+      "---",
+      "_type: amadla.org/entity/secret@v1.0.0",
+      "_body:",
+      "  source: ${1|vault,keepassxc,bitwarden|}",
+      "  key: ${2:secret/data/myapp}",
+      "  field: ${3:password}",
+      "  ${0}"
+    ]
+  },
+  "HERY Infrastructure VM": {
+    "prefix": "hery-vm",
+    "description": "Virtual machine infrastructure entity",
+    "body": [
+      "---",
+      "_type: amadla.org/entity/infrastructure/vm@v1.0.0",
+      "_body:",
+      "  provider: ${1|libvirt,virtualbox,wsl|}",
+      "  name: ${2:my-vm}",
+      "  cpus: ${3:2}",
+      "  memory: ${4:2048}",
+      "  disk: ${5:20G}",
+      "  box: ${6:ubuntu-24.04}",
+      "  network:",
+      "    type: ${7|nat,bridged,hostonly|}",
+      "  ${0}"
+    ]
+  },
+  "_type": {
+    "prefix": "_type",
+    "description": "HERY _type property",
+    "body": [
+      "_type: ${1:amadla.org/entity/${2:application}@${3:v1.0.0}}"
+    ]
+  },
+  "_extends": {
+    "prefix": "_extends",
+    "description": "HERY _extends property",
+    "body": [
+      "_extends: ${1:github.com/AmadlaOrg/${2:EntityApplication}@${3:v1.0.0}}"
+    ]
+  },
+  "_meta": {
+    "prefix": "_meta",
+    "description": "HERY _meta block",
+    "body": [
+      "_meta:",
+      "  name: ${1:Name}",
+      "  description: ${2:Description}",
+      "  tags:",
+      "    - ${0:tag}"
+    ]
+  },
+  "_body": {
+    "prefix": "_body",
+    "description": "HERY _body block",
+    "body": [
+      "_body:",
+      "  ${0}"
+    ]
+  },
+  "_requires": {
+    "prefix": "_requires",
+    "description": "HERY _requires block",
+    "body": [
+      "_requires:",
+      "  - ${0:amadla.org/entity/package@v1.0.0}"
+    ]
+  }
+}

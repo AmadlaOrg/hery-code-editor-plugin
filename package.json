@@ -1,0 +1,71 @@
+{
+  "name": "hery",
+  "displayName": "HERY",
+  "description": "Language support for HERY (Hierarchical Entity Relational YAML) files — syntax highlighting, snippets, and validation.",
+  "version": "0.1.0",
+  "publisher": "amadla",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AmadlaOrg/hery-code-editor-plugin"
+  },
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets"
+  ],
+  "keywords": [
+    "hery",
+    "yaml",
+    "infrastructure",
+    "amadla",
+    "entity"
+  ],
+  "icon": "images/hery-icon.png",
+  "contributes": {
+    "languages": [
+      {
+        "id": "hery",
+        "aliases": [
+          "HERY",
+          "hery"
+        ],
+        "extensions": [
+          ".hery"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./images/hery-file-light.svg",
+          "dark": "./images/hery-file-dark.svg"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "hery",
+        "scopeName": "source.hery",
+        "path": "./syntaxes/hery.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "hery",
+        "path": "./snippets/hery.json"
+      }
+    ],
+    "configurationDefaults": {
+      "[hery]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.autoIndent": "advanced",
+        "editor.quickSuggestions": {
+          "other": true,
+          "comments": false,
+          "strings": true
+        }
+      }
+    }
+  }
+}

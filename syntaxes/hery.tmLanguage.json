@@ -1,0 +1,225 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "HERY",
+  "scopeName": "source.hery",
+  "fileTypes": ["hery"],
+  "patterns": [
+    { "include": "#comment" },
+    { "include": "#document-separator" },
+    { "include": "#directive" },
+    { "include": "#reserved-property" },
+    { "include": "#entity-uri" },
+    { "include": "#version-constraint" },
+    { "include": "#key-value" },
+    { "include": "#flow-mapping" },
+    { "include": "#flow-sequence" },
+    { "include": "#string-double" },
+    { "include": "#string-single" },
+    { "include": "#anchor" },
+    { "include": "#alias" },
+    { "include": "#tag" },
+    { "include": "#block-scalar" },
+    { "include": "#numeric" },
+    { "include": "#boolean" },
+    { "include": "#null" },
+    { "include": "#list-item" }
+  ],
+  "repository": {
+    "comment": {
+      "match": "(?:^|\\s+)(#.*)$",
+      "captures": {
+        "1": { "name": "comment.line.number-sign.hery" }
+      }
+    },
+    "document-separator": {
+      "match": "^(---|\\.\\.\\.)\\s*$",
+      "name": "meta.separator.hery"
+    },
+    "directive": {
+      "match": "^(%[A-Za-z]+.*)$",
+      "name": "keyword.control.directive.hery"
+    },
+    "reserved-property": {
+      "patterns": [
+        {
+          "comment": "Root-level _type property with entity URI value",
+          "match": "^(_type)(\\s*:\\s*)(.+)$",
+          "captures": {
+            "1": { "name": "keyword.control.reserved.type.hery" },
+            "2": { "name": "punctuation.separator.key-value.hery" },
+            "3": {
+              "patterns": [
+                { "include": "#entity-uri-value" },
+                { "include": "#string-double" },
+                { "include": "#string-single" },
+                { "include": "#comment" }
+              ]
+            }
+          }
+        },
+        {
+          "comment": "Root-level _extends property with entity URI value",
+          "match": "^(_extends)(\\s*:\\s*)(.+)$",
+          "captures": {
+            "1": { "name": "keyword.control.reserved.extends.hery" },
+            "2": { "name": "punctuation.separator.key-value.hery" },
+            "3": {
+              "patterns": [
+                { "include": "#entity-uri-value" },
+                { "include": "#string-double" },
+                { "include": "#string-single" },
+                { "include": "#comment" }
+              ]
+            }
+          }
+        },
+        {
+          "comment": "Root-level _meta property (block key)",
+          "match": "^(_meta)(\\s*:)\\s*$",
+          "captures": {
+            "1": { "name": "keyword.control.reserved.meta.hery" },
+            "2": { "name": "punctuation.separator.key-value.hery" }
+          }
+        },
+        {
+          "comment": "Root-level _body property (block key)",
+          "match": "^(_body)(\\s*:)\\s*$",
+          "captures": {
+            "1": { "name": "keyword.control.reserved.body.hery" },
+            "2": { "name": "punctuation.separator.key-value.hery" }
+          }
+        },
+        {
+          "comment": "Root-level _requires property (block key)",
+          "match": "^(_requires)(\\s*:)\\s*$",
+          "captures": {
+            "1": { "name": "keyword.control.reserved.requires.hery" },
+            "2": { "name": "punctuation.separator.key-value.hery" }
+          }
+        }
+      ]
+    },
+    "entity-uri-value": {
+      "comment": "Entity URI with optional version: host/path@version",
+      "match": "([a-zA-Z0-9._-]+(?:\\.[a-zA-Z]{2,})/[a-zA-Z0-9_./#-]+)(@[\\^~]?v?[0-9][0-9a-zA-Z.*-]*|@latest)?",
+      "captures": {
+        "1": { "name": "string.unquoted.uri.hery" },
+        "2": { "name": "constant.other.version.hery" }
+      }
+    },
+    "entity-uri": {
+      "comment": "Entity URI in list items or values",
+      "match": "(?<=[-:]\\s)([a-zA-Z0-9._-]+(?:\\.[a-zA-Z]{2,})/[a-zA-Z0-9_./#-]+)(@[\\^~]?v?[0-9][0-9a-zA-Z.*-]*|@latest)?",
+      "captures": {
+        "1": { "name": "string.unquoted.uri.hery" },
+        "2": { "name": "constant.other.version.hery" }
+      }
+    },
+    "version-constraint": {
+      "comment": "Standalone version reference like @v1.0.0 or @^v1.0.0",
+      "match": "@[\\^~]?v[0-9]+\\.[0-9]+\\.[0-9]+[a-zA-Z0-9.-]*",
+      "name": "constant.other.version.hery"
+    },
+    "local-element-ref": {
+      "comment": "Local element reference like #database.hery",
+      "match": "#[a-zA-Z0-9_.-]+\\.hery",
+      "name": "variable.other.link.hery"
+    },
+    "key-value": {
+      "comment": "Regular YAML key-value pair",
+      "match": "^(\\s*)([-\\w.]+)(\\s*:)",
+      "captures": {
+        "2": { "name": "entity.name.tag.hery" },
+        "3": { "name": "punctuation.separator.key-value.hery" }
+      }
+    },
+    "string-double": {
+      "name": "string.quoted.double.hery",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.hery",
+          "match": "\\\\."
+        }
+      ]
+    },
+    "string-single": {
+      "name": "string.quoted.single.hery",
+      "begin": "'",
+      "end": "'",
+      "patterns": [
+        {
+          "name": "constant.character.escape.hery",
+          "match": "''"
+        }
+      ]
+    },
+    "anchor": {
+      "match": "&[a-zA-Z0-9_-]+",
+      "name": "entity.name.type.anchor.hery"
+    },
+    "alias": {
+      "match": "\\*[a-zA-Z0-9_-]+",
+      "name": "variable.other.alias.hery"
+    },
+    "tag": {
+      "match": "![a-zA-Z0-9_-]+",
+      "name": "storage.type.tag.hery"
+    },
+    "block-scalar": {
+      "comment": "Block scalar indicators | and >",
+      "match": "[|>][+-]?\\s*$",
+      "name": "keyword.control.flow.block-scalar.hery"
+    },
+    "numeric": {
+      "match": "(?<=:\\s)[-+]?(?:0x[0-9a-fA-F]+|0o[0-7]+|0b[01]+|[0-9](?:[0-9_]*[0-9])?(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?|\\.(?:inf|Inf|INF))(?=\\s*(?:#.*)?$)",
+      "name": "constant.numeric.hery"
+    },
+    "boolean": {
+      "match": "(?<=:\\s)(?:true|false|True|False|TRUE|FALSE|yes|no|Yes|No|YES|NO|on|off|On|Off|ON|OFF)(?=\\s*(?:#.*)?$)",
+      "name": "constant.language.boolean.hery"
+    },
+    "null": {
+      "match": "(?<=:\\s)(?:null|Null|NULL|~)(?=\\s*(?:#.*)?$)",
+      "name": "constant.language.null.hery"
+    },
+    "list-item": {
+      "match": "^(\\s*)(-)\\s",
+      "captures": {
+        "2": { "name": "punctuation.definition.block.sequence.item.hery" }
+      }
+    },
+    "flow-mapping": {
+      "begin": "\\{",
+      "end": "\\}",
+      "name": "meta.flow-mapping.hery",
+      "beginCaptures": { "0": { "name": "punctuation.definition.mapping.begin.hery" } },
+      "endCaptures": { "0": { "name": "punctuation.definition.mapping.end.hery" } },
+      "patterns": [
+        { "include": "#string-double" },
+        { "include": "#string-single" },
+        { "include": "#numeric" },
+        { "include": "#boolean" },
+        { "include": "#null" },
+        { "include": "#comment" }
+      ]
+    },
+    "flow-sequence": {
+      "begin": "\\[",
+      "end": "\\]",
+      "name": "meta.flow-sequence.hery",
+      "beginCaptures": { "0": { "name": "punctuation.definition.sequence.begin.hery" } },
+      "endCaptures": { "0": { "name": "punctuation.definition.sequence.end.hery" } },
+      "patterns": [
+        { "include": "#string-double" },
+        { "include": "#string-single" },
+        { "include": "#numeric" },
+        { "include": "#boolean" },
+        { "include": "#null" },
+        { "include": "#entity-uri" },
+        { "include": "#comment" }
+      ]
+    }
+  }
+}

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <path d="M6 2h14l8 8v18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" fill="#F5F5F5" stroke="#424242" stroke-width="1.5"/>
+  <path d="M20 2v6a2 2 0 0 0 2 2h6" fill="#E0E0E0" stroke="#424242" stroke-width="1.5"/>
+  <text x="16" y="23" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="8" fill="#6A1B9A">H</text>
+</svg>
