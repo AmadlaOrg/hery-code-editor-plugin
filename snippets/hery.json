@@ -94,7 +94,8 @@
       "  engine: ${2|go,jinja2,mustache,qute,freemarker|}",
       "  source: ${3:template.conf.tmpl}",
       "  output: ${4:/etc/app/config.conf}",
-      "  description: ${0:Template description}"
+      "  entity_types:",
+      "    - ${0:amadla.org/entity/application@^v1.0.0}"
     ]
   },
   "HERY Webserver": {

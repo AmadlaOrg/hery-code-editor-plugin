@@ -120,9 +120,9 @@
       "match": "@[\\^~]?v[0-9]+\\.[0-9]+\\.[0-9]+[a-zA-Z0-9.-]*",
       "name": "constant.other.version.hery"
     },
-    "local-element-ref": {
-      "comment": "Local element reference like #database.hery",
-      "match": "#[a-zA-Z0-9_.-]+\\.hery",
+    "local-file-ref": {
+      "comment": "Local file reference like ./database.hery",
+      "match": "\\./[a-zA-Z0-9_.-]+\\.hery",
       "name": "variable.other.link.hery"
     },
     "key-value": {
